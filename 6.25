@@ -1,0 +1,26 @@
+# 6.25
+
+## cuda
+
+- CUDA编程指北：从入门到实践 https://zhuanlan.zhihu.com/p/680075822
+  - 这个对于刚入门cuda非常有用
+
+- 《CUDA 编程基础与实践》，樊哲勇，清华大学出版社
+
+  - 可以去找一下这个书的在线PDF
+  - [CUDA-Programming/src/03-basic-framework/add1.cu at master · brucefan1983/CUDA-Programming (github.com)](https://link.zhihu.com/?target=https%3A//github.com/brucefan1983/CUDA-Programming/blob/master/src/03-basic-framework/add1.cu) 这个是这本书github的英文版，上面有很多源码可以参考
+
+- 其他推荐书籍
+
+  ![img](https://picx.zhimg.com/v2-5a2517824eb6bb0a6e69328a34785644_xld.png?source=1d2f5c51)
+
+## vllm
+
+- 测试了vllm-V0.20.1的NCCL PD分离场景：存在decode 无法响应的问题：
+
+  - 现象：P，D节点能正常工作，Proxy也正常；Proxy发送请求给P节点是正常处理的，但是Proxy发送给D节点无响应
+  - 可能原因：vllm更新引入的请求编码，导致P侧和D侧对于请求编码的解析出现问题，导致两者无法进行kv cache
+  - vllm官方讨论：https://github.com/vllm-project/vllm/pull/44854
+
+  - vllm在最新版的V0.24.0中删掉了nccl这个策略，主推mooncake和nixl
+
